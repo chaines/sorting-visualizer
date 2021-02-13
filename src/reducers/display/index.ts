@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import activeReducer, { setActiveBars, clearActiveBars } from './active';
+import activeReducer, { setActiveBars, addActiveBar, clearActiveBars } from './active';
 import sortedReducer, { setSorted, clearSorted, addSortedElement } from './sorted';
 import swapReducer, { setSwapBars, clearSwapBars } from './swap';
 import stateReducer, { visualizerSorted, visualizerSorting, visualizerUnsorted } from './state';
@@ -17,7 +17,8 @@ export const actions = {
   visualizerSorting,
   visualizerUnsorted,
   setCurrentArray,
-  clearCurrentArray
+  clearCurrentArray,
+  addActiveBar
 };
 
 export default combineReducers({
