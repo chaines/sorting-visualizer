@@ -3,12 +3,19 @@ import React from 'react';
 import './Bar.css';
 
 interface BarProps {
-  height: number
+  height: number,
+  selected: boolean,
+  swap: boolean,
+  sorted: boolean
 }
 
-const Bar = ({height}: BarProps) => {
+const Bar = ({height, selected, swap, sorted}: BarProps) => {
+  let className = 'bar' + 
+    (selected ? ' selected' : '') + 
+    (swap ? ' swap' : '') +
+    (sorted ? ' sorted' : '');
   return (
-    <div className="bar" style={{height: height + "%"}}></div>
+    <div className={className} style={{height: height + "%"}}></div>
   )
 }
 

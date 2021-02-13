@@ -25,7 +25,7 @@
   padding: 20px;
   background-color: #252836;
   border-radius: 12px;
-  transition: background-color .13s ease-in;
+  transition: all .13s ease-in;
 
 }
 
@@ -34,6 +34,10 @@
   transition: background-color .13s ease-in;
 }
 
+#header button:disabled {
+  background-color: #353340;
+  opacity: .9
+}
 
 #header div {
   display: inline-block;
@@ -41,6 +45,7 @@
 
 #header input[type=range] {
   outline: none;
+  transition: all .13s ease-in;
 }
 
 /* It's honestly not worth styling the range input. Maybe later */

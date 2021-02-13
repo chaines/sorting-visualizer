@@ -6,3 +6,15 @@
 .bar:not(:last-child) {
   margin-right: 10px;
 }
+
+.bar.sorted {
+  background-color: green;
+}
+
+.bar.selected {
+  background-color: yellow;
+}
+
+.bar.swap {
+  background-color: orange;
+}
