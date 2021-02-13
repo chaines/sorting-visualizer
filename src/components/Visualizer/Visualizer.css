@@ -1,3 +1,11 @@
-div {
-  font-weight: bold;
+#visualizer {
+  width: calc(100% -40px);
+  background: #353340;
+  border-radius: 25px;
+  margin: 20px;
+  padding: 50px;
+  height: calc(100vh - 540px);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
 }

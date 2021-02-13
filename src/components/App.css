@@ -1,0 +1,10 @@
+
+
+#root {
+  margin: 100px;
+  padding: 50px;
+  border-radius: 20px;
+  height: calc(100vh - 300px);
+
+  background-color: #1f1d2b;
+}

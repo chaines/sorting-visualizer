@@ -1,0 +1,8 @@
+.bar {
+  width: 40px;
+  background-color: white;
+}
+
+.bar:not(:last-child) {
+  margin-right: 10px;
+}
