@@ -32,7 +32,7 @@ const Header = ({speed, updateSpeed, bars, resetBars, sort, sorting, clearSorted
       }}>Bubble Sort</button>
       <button disabled={sorting} onClick={() => sort('mergeSort', bars, speed)}>Merge Sort</button>
       <button disabled={sorting} onClick={() => sort('insertionSort', bars, speed)}>Insertion Sort</button>
-      <button disabled={sorting} onClick={() => sort('heapSort', bars, speed)}>Heap Sort</button>
+      <button disabled={true} onClick={() => sort('heapSort', bars, speed)}>Heap Sort</button>
       <button disabled={sorting} onClick={() => sort('quickSort', bars, speed)}>Quick Sort</button>
     </div>
   );

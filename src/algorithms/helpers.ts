@@ -5,3 +5,7 @@ export const timeout = (ms: number) => {
     }, ms);
   })
 }
+
+export const range = (start: number, stop: number): ReadonlyArray<number> => {
+  return [...Array(stop).keys()].slice(start);
+}

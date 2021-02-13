@@ -2,7 +2,7 @@ const addBar = (val: number) => {
   return { type: 'ADD_BAR', payload: val };  
 };
 
-const setAllBars = (val: Array<number>) => {
+const setAllBars = (val: ReadonlyArray<number>) => {
   return { type: 'SET_BARS', payload: val };
 };
 

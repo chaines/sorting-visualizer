@@ -1,4 +1,4 @@
-export const setActiveBars = (arr: Array<number>) => {
+export const setActiveBars = (arr: ReadonlyArray<number>) => {
   return { type: 'SET_ACTIVE_BARS', payload: arr }
 }
 
