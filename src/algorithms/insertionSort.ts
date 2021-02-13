@@ -1,48 +1,48 @@
-import { setActiveBars, clearActiveBars } from '../reducers/active';
-import { setSwappers, clearSwappers } from '../reducers/swap';
 import { setAllBars } from '../reducers/bars';
-import { setSorting } from '../reducers/sorting';
-import { addSortedElement } from '../reducers/sorted';
-import { timeout } from './helpers';
+import { timeout, Time } from './helpers';
+import { actions } from '../reducers/display';
 
 
-export default async (array: Array<number>, speed: number, dispatch: any) => {
+export default async (array: Array<number>, dispatch: any) => {
+  const time = new Time();
   let arr = array.slice();
- dispatch(addSortedElement(0));
- dispatch(setActiveBars([0,1])); 
- await timeout(speed);
+  dispatch(actions.addSortedElement(0));
+  dispatch(actions.setActiveBars([0,1])); 
+
+  await timeout(time.time);
   for(let currMax = 1;  currMax < arr.length; currMax++) {
     let currVal = arr[currMax];
     for(let i = currMax - 1; i >= 0; i--) {
-     dispatch(setActiveBars([currMax, i]));
-     await timeout(speed);
-     dispatch(clearActiveBars());
+     dispatch(actions.setActiveBars([currMax, i]));
+     await timeout(time.time);
+     dispatch(actions.clearActiveBars());
       if(arr[i] <= currVal) {
-       dispatch(setSwappers([i+1, currMax]));
-       await timeout(speed);
+       dispatch(actions.setSwapBars([i+1, currMax]));
+       await timeout(time.time);
         arr[i+1] = currVal;
-       dispatch(clearSwappers());
+       dispatch(actions.clearSwapBars());
        dispatch(setAllBars(arr));
-       dispatch(addSortedElement(currMax));
-       await timeout(speed);
+       dispatch(actions.addSortedElement(currMax));
+       await timeout(time.time);
         break;
       } else {
-       dispatch(setSwappers([i+1, i]));
-       await timeout(speed);
+       dispatch(actions.setSwapBars([i+1, i]));
+       await timeout(time.time);
         arr[i+1] = arr[i];
         if(i === 0) {
          dispatch(setAllBars(arr));
-         dispatch(setSwappers([i, currMax]));
-         await timeout(speed);
+         dispatch(actions.setSwapBars([i, currMax]));
+         await timeout(time.time);
           arr[i] = currVal;
         }
       }
-     dispatch(clearSwappers());
+     dispatch(actions.clearSwapBars());
      dispatch(setAllBars(arr));
-     dispatch(addSortedElement(currMax));
-     await timeout(speed);
+     dispatch(actions.addSortedElement(currMax));
+     await timeout(time.time);
     }
   }
   dispatch(setAllBars(arr));
-  dispatch(setSorting(false));
+  dispatch(actions.visualizerSorted());
+  time.unsubscribe();
 };

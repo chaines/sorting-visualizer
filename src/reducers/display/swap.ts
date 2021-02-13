@@ -1,8 +1,8 @@
-export const setSwappers = (arr: Array<number>) => {
+export const setSwapBars = (arr: Array<number>) => {
   return { type: 'SET_SWAP', payload: arr };
 }
 
-export const clearSwappers = () => {
+export const clearSwapBars = () => {
   return { type: 'CLEAR_SWAP' };
 }
 

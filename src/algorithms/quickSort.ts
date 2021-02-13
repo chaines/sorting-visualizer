@@ -1,11 +1,10 @@
-import { timeout, range } from './helpers';
-import { setActiveBars, clearActiveBars } from '../reducers/active';
-import { setSwappers, clearSwappers } from '../reducers/swap';
+import { timeout, range, Time } from './helpers';
+import { actions } from '../reducers/display';
 import { setAllBars } from '../reducers/bars';
-import { setSorting } from '../reducers/sorting';
-import { addSortedElement, setSorted } from '../reducers/sorted';
+import { clearCurrentArray } from '../reducers/display/current';
 
-export default async (array: Array<number>, speed: number, dispatch: any) => {
+export default async (array: Array<number>, dispatch: any) => {
+  const time = new Time();
 
   const sort = async (array: Array<number>)
     : Promise<ReadonlyArray<number>> => {
@@ -20,50 +19,51 @@ export default async (array: Array<number>, speed: number, dispatch: any) => {
       const pivotVal: number = array[stop];
       let pivotIndex: number = stop;
 
-      dispatch(setActiveBars(range(start, stop)));
-      await timeout(speed);
+      dispatch(actions.setCurrentArray(range(start, stop)));
+      await timeout(time.time);
 
       /**
        * Partitioner
        */
       for (let i = pivotIndex - 1; i >= start; i--) {
-        dispatch(setActiveBars([i, pivotIndex]));
-        await timeout(speed);
+        dispatch(actions.setActiveBars([i, pivotIndex]));
+        await timeout(time.time);
         if (array[i] > pivotVal) {
-          dispatch(setSwappers([i, pivotIndex - 1]));
+          dispatch(actions.setSwapBars([i, pivotIndex - 1]));
           [array[i], array[pivotIndex - 1]] = [array[pivotIndex - 1], array[i]];
-          await timeout(speed);
+          await timeout(time.time);
           dispatch(setAllBars(array));
-          dispatch(setSwappers([pivotIndex - 1, pivotIndex]));
-          await timeout(speed);
+          dispatch(actions.setSwapBars([pivotIndex - 1, pivotIndex]));
+          await timeout(time.time);
           [array[pivotIndex - 1], array[pivotIndex]] = [array[pivotIndex], array[pivotIndex - 1]];
           dispatch(setAllBars(array));
-          dispatch(clearSwappers());
+          dispatch(actions.clearSwapBars());
           pivotIndex--;
         }
-        dispatch(clearActiveBars());
+        dispatch(actions.clearActiveBars());
       }
 
       if (pivotIndex - 1 > start) {
         stack.push(start);
         stack.push(pivotIndex - 1);
       } else if (pivotIndex !== start) {
-        dispatch(addSortedElement(start));
+        dispatch(actions.addSortedElement(start));
       }
 
       if (pivotIndex + 1 < stop) {
         stack.push(pivotIndex + 1);
         stack.push(stop);
       } else {
-        dispatch(addSortedElement(stop));
+        dispatch(actions.addSortedElement(stop));
       }
-      dispatch(addSortedElement(pivotIndex));
+      dispatch(actions.addSortedElement(pivotIndex));
 
     }
     return array;
   }
   const arr = await sort(array);
-  console.log(arr);
+  time.unsubscribe()
   dispatch(setAllBars(arr));
-  dispatch(setSorting(false));
+  dispatch(clearCurrentArray());
+  dispatch(actions.visualizerSorted());
 };

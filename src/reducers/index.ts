@@ -1,16 +1,10 @@
 import { combineReducers } from 'redux';
-import bars from './bars';
-import speed from './speed';
-import sorting from './sorting';
-import swap from './swap';
-import active from './active';
-import sorted from './sorted';
+import barsReducer from './bars';
+import speedReducer from './speed';
+import displayReducer, { actions } from './display'
 
 export default combineReducers({
-  bars,
-  speed,
-  sorting,
-  active,
-  swap,
-  sorted
+  bars: barsReducer,
+  speed: speedReducer,
+  display: displayReducer
 });

@@ -1,15 +1,14 @@
 import { connect } from 'react-redux';
 import { setAllBars } from '../../reducers/bars';
 import { setSpeed } from '../../reducers/speed';
-import { setSorting } from '../../reducers/sorting';
-import { clearSorted } from '../../reducers/sorted';
+import { actions } from '../../reducers/display';
 import sorts from '../../algorithms';
 import Header from './Header';
 
 const mapStateToProps = (state) => ({
   speed: state.speed,
   bars: state.bars,
-  sorting: state.sorting
+  visualizerState: state.display.state
 });
 const mapDispatchToProps = (dispatch) => ({
   updateSpeed: (speed: number) => {
@@ -21,13 +20,14 @@ const mapDispatchToProps = (dispatch) => ({
     for(let i = 0; i < barCount; i++) {
       bars.push(Math.floor(Math.random() * 95) + 5);
     }
+    dispatch(actions.visualizerUnsorted());
     dispatch(setAllBars(bars));
   },
-  sort: (algorithm: string, arr:Array<number>, speed:number) => {
-    dispatch(setSorting(true));
-    sorts[algorithm](arr, speed, dispatch);
+  sort: (algorithm: string, arr:Array<number>) => {
+    dispatch(actions.visualizerSorting());
+    sorts[algorithm](arr, dispatch);
   },
-  clearSorted: () => dispatch(clearSorted())
+  clearSorted: () => dispatch(actions.clearSorted())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

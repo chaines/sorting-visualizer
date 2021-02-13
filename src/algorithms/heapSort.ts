@@ -1,5 +1,6 @@
-import { timeout } from './helpers';
+import { timeout, Time } from './helpers';
 
-export default async (array: Array<number>, speed: number, dispatch: any) => {
+export default async (array: Array<number>, dispatch: any) => {
   let arr = array.slice();
+  let time = new Time();
 };

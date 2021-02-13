@@ -7,6 +7,10 @@
   margin-right: 10px;
 }
 
+.bar.current {
+  background-color: pink;
+}
+
 .bar.sorted {
   background-color: green;
 }

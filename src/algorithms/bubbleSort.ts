@@ -1,36 +1,35 @@
-import { timeout } from './helpers';
-import { setActiveBars, clearActiveBars } from '../reducers/active';
-import { setSwappers, clearSwappers } from '../reducers/swap';
+import { timeout, Time } from './helpers';
 import { setAllBars } from '../reducers/bars';
-import { setSorting } from '../reducers/sorting';
-import { addSortedElement, setSorted } from '../reducers/sorted';
+import { actions } from '../reducers/display';
 
-export default async (array: Array<number>, speed: number, dispatch: any) => {
+export default async (array: Array<number>, dispatch: any) => {
+  const time = new Time();
   let arr = array.slice();
   let sorted = false;
   let rounds = 1;
   while (!sorted) {
     sorted = true;
     for (let i = 0; i < arr.length - rounds; i++) {
-      dispatch(setActiveBars([i, i+1]));
+      dispatch(actions.setActiveBars([i, i+1]));
       if (arr[i] > arr[i+1]) {
         sorted = false;
         [arr[i], arr[i+1]] = [arr[i+1], arr[i]];
-        await timeout(speed);
-        dispatch(clearActiveBars());
-        dispatch(setSwappers([i, i+1]));
-        await timeout(speed);
+        await timeout(time.time);
+        dispatch(actions.clearActiveBars());
+        dispatch(actions.setSwapBars([i, i+1]));
+        await timeout(time.time);
         dispatch(setAllBars(arr));
-        await timeout(speed);
-        dispatch(clearSwappers());
+        await timeout(time.time);
+        dispatch(actions.clearSwapBars());
       } else {
-        await timeout(speed);
-        dispatch(clearActiveBars());
+        await timeout(time.time);
+        dispatch(actions.clearActiveBars());
       }
     }
-    dispatch(addSortedElement(arr.length - rounds));
+    dispatch(actions.addSortedElement(arr.length - rounds));
     rounds++;
   }
-  dispatch(setSorted(Object.keys(arr).map(k => parseInt(k))));
-  dispatch(setSorting(false));
+  time.unsubscribe();
+  dispatch(actions.setSorted(Object.keys(arr).map(k => parseInt(k))));
+  dispatch(actions.visualizerSorted());
 };

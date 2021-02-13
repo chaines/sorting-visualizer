@@ -9,3 +9,15 @@
   justify-content: center;
   align-items: flex-end;
 }
+
+#visualizer.unsorted {
+  border: 3px solid red;
+}
+
+#visualizer.sorting {
+  border: 3px solid yellow;
+}
+
+#visualizer.sorted {
+  border: 3px solid green;
+}
